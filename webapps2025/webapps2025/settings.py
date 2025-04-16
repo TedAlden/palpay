@@ -135,3 +135,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+
+# Default superuser credentials
+
+DEFAULT_SUPERUSER_USERNAME = "admin1"
+
+DEFAULT_SUPERUSER_PASSWORD = "admin1"
+
+DEFAULT_SUPERUSER_EMAIL = ""
