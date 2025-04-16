@@ -27,13 +27,13 @@ def currency_conversion(request, from_currency, to_currency, amount):
         # Validate the from_currency type
         if from_currency not in SUPPORTED_CURRENCIES:
             return JsonResponse(
-                {"error": f"Invalid from_currency: {from_currency}"}, status=400
+                {"error": f"Unrecognised from_currency: {from_currency}"}, status=422
             )
 
         # Validate the to_currency type
         if to_currency not in SUPPORTED_CURRENCIES:
             return JsonResponse(
-                {"error": f"Invalid to_currency: {to_currency}"}, status=400
+                {"error": f"Unrecognised to_currency: {to_currency}"}, status=422
             )
 
         # Validate the amount data type
@@ -47,7 +47,7 @@ def currency_conversion(request, from_currency, to_currency, amount):
         # Check that the amount is positive
         if float(amount) <= 0:
             return JsonResponse(
-                {"error": f"Amount must be greater than zero: {amount}"}, status=400
+                {"error": f"Amount must be greater than zero: {amount}"}, status=422
             )
 
         # Calculate the converted amount, rounded to 2 decimal places
@@ -66,4 +66,4 @@ def currency_conversion(request, from_currency, to_currency, amount):
 
     # Catch generic server error, if the above handling doesn't
     except Exception as e:
-        return JsonResponse({"error": f"Server error: {e}"}, status=400)
+        return JsonResponse({"error": f"Server error: {e}"}, status=500)
