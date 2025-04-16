@@ -1,0 +1,73 @@
+{% extends '../base.html' %}
+
+{% block title %}
+Notifications
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<h1>Notifications</h1>
+<p>Here you can view your notifications, i.e., payment requests to respond to.</p>
+<ul>
+  <li>
+    Requests for you to pay another user are shown in red, while requests to pay
+    you are shown in green.
+  </li>
+  <li>
+    Payment requests can be rejected or accepted.
+  </li>
+</ul>
+
+{% if notifications %}
+<table class="table table-bordered border-black notifications align-middle">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>From</th>
+      <th>Amount</th>
+      <th>To</th>
+      <th>Amount</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for notification in notifications %}
+    <tr class="notification {{ notification.type|lower }}">
+      <td>{{ notification.timestamp }}</td>
+      <td>{{ notification.type }}</td>
+      <td>{{ notification.sender.username }}</td>
+      <td>{{ notification.currency_sent }} {{ notification.amount_sent }}</td>
+      <td>{{ notification.receiver.username }}</td>
+      <td>{{ notification.currency_received }} {{ notification.amount_received }}</td>
+      <td>
+        <form method="post" action="{% url 'accept_transaction' notification.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-primary">Accept</button>
+        </form>
+        <form method="post" action="{% url 'reject_transaction' notification.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-danger">Reject</button>
+        </form>  
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No notifications found.</p>
+{% endif %}
+
+<style>
+  table.notifications tr.notification.send {
+    color: #28a745; /* Green for inbound payment notifications */
+  }
+  table.notifications tr.notification.receive {
+    color: #dc3545; /* Red for outbound payment notifications */
+  }
+</style>
+
+{% endblock %}
