@@ -24,6 +24,7 @@ from payment import views as payment_views
 urlpatterns = [
     path("", payment_views.home, name="home"),
     path("payment/", include("payment.urls")),
+    path("api/", include("api.urls")),
     path("admin/", admin.site.urls),
     path("register/", register_views.register_user, name="register"),
     path("login/", register_views.login_user, name="login"),

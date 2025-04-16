@@ -8,7 +8,7 @@ from decimal import Decimal
 
 from .models import Transaction
 from .forms import SendMoneyForm, RequestMoneyForm
-from .helpers import get_conversion_rate, transfer_money
+from .helpers import convert_currency, transfer_money
 
 
 def home(request):
@@ -47,13 +47,13 @@ def send_money(request):
                 send_form.add_error("amount", "Insufficient balance.")
                 return render(request, "payment/send.html", {"send_form": send_form})
 
-            # Handle currency conversion
+            # Handle currency conversion, using the convert_currency
+            # helper function which makes the API call
             currency_sent = sender.currency
             currency_received = recipient.currency
-            conversion_rate = get_conversion_rate(currency_sent, currency_received)
-            amount_received = amount_sent * Decimal(conversion_rate)
-            # Round to 2 decimal places
-            amount_received = amount_received.quantize(Decimal("0.01"))
+            amount_received = Decimal(convert_currency(
+                currency_sent, currency_received, amount_sent
+            )).quantize(Decimal("0.01"))
             
             # Get timestamp
             timestamp = request.POST.get("timestamp")
@@ -108,14 +108,14 @@ def request_money(request):
             if recipient == sender:
                 request_form.add_error("target_user", "Cannot send money to yourself.")
                 return render(request, "payment/request.html", {"request_form": request_form})
-            
-            # Handle currency conversion
+
+            # Handle currency conversion, using the convert_currency
+            # helper function which makes the API call
             currency_sent = sender.currency
             currency_received = recipient.currency
-            conversion_rate = get_conversion_rate(currency_received, currency_sent)
-            amount_sent = amount_requested * Decimal(conversion_rate)
-            # Round to 2 decimal places
-            amount_sent = amount_sent.quantize(Decimal("0.01"))
+            amount_sent = Decimal(convert_currency(
+                currency_received, currency_sent, amount_requested
+            )).quantize(Decimal("0.01"))
             
             # Get timestamp
             timestamp = request.POST.get("timestamp")
