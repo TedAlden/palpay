@@ -9,6 +9,7 @@ from decimal import Decimal
 from .models import Transaction
 from .forms import SendMoneyForm, RequestMoneyForm
 from .helpers import convert_currency, transfer_money
+from timestamp.client import get_timestamp
 
 
 def home(request):
@@ -50,8 +51,8 @@ def send_money(request):
                 currency_sent, currency_received, amount_sent
             )).quantize(Decimal("0.01"))
             
-            # Get timestamp
-            timestamp = request.POST.get("timestamp")
+            # Get timestamp using thrift client
+            timestamp = get_timestamp()
 
             # Create the transaction record
             transaction = Transaction.objects.create(
@@ -112,8 +113,8 @@ def request_money(request):
                 currency_received, currency_sent, amount_requested
             )).quantize(Decimal("0.01"))
             
-            # Get timestamp
-            timestamp = request.POST.get("timestamp")
+            # Get timestamp using thrift client
+            timestamp = get_timestamp()
 
             # Create the transaction record
             transaction = Transaction.objects.create(

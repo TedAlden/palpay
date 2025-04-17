@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
     'payment.apps.PaymentConfig',
+    'timestamp.apps.TimestampConfig',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
