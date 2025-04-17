@@ -31,11 +31,6 @@ def send_money(request):
             except User.DoesNotExist:
                 send_form.add_error("recipient", "User does not exist.")
                 return render(request, "payment/send.html", {"send_form": send_form})
-            
-            # Prevent sending money to superusers (admins)
-            if recipient.is_superuser:
-                send_form.add_error("recipient", "Cannot send money to superuser.")
-                return render(request, "payment/send.html", {"send_form": send_form})
 
             # Prevent sending money to yourself
             if sender == recipient:
