@@ -9,6 +9,10 @@ from register.forms import RegisterForm
 
 @csrf_protect
 def register_user(request):
+    if request.user.is_authenticated:
+        messages.info(request, "You are already logged in.")
+        return redirect("home")
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -23,6 +27,10 @@ def register_user(request):
 
 @csrf_protect
 def login_user(request):
+    if request.user.is_authenticated:
+        messages.info(request, "You are already logged in.")
+        return redirect("home")
+
     if request.method == "POST":
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
