@@ -1,0 +1,67 @@
+{% extends '../base.html' %}
+
+{% block title %}
+All Transactions
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>All Transactions</h1>
+<p>Here you can view every transaction for every user on the site.</p>
+<ul>
+  <li>
+    Pending transactions are highlighted in orange, accepted transactions in
+    green, and rejected transactions in red.
+  </li>
+  <li>
+    Each transaction shows the amount in the sender's currency, as well as the
+    conversion into in the recipient's currency.
+  </li>
+</ul>
+
+{% if transactions %}
+<table class="table table-bordered transactions align-middle">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>From</th>
+      <th>Amount</th>
+      <th>To</th>
+      <th>Amount</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for transaction in transactions %}
+    <tr class="transaction {{ transaction.status|lower }}">
+      <td>{{ transaction.timestamp }}</td>
+      <td>{{ transaction.type }}</td>
+      <td>{{ transaction.sender.username }}</td>
+      <td>{{ transaction.currency_sent }} {{ transaction.amount_sent }}</td>
+      <td>{{ transaction.receiver.username }}</td>
+      <td>{{ transaction.currency_received }} {{ transaction.amount_received }}</td>
+      <td>{{ transaction.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No transactions found.</p>
+{% endif %}
+
+<style>
+  table.transactions tr.transaction.pending {
+    background-color: #fff3cd; /* Light orange for pending transactions */
+  }
+  table.transactions tr.transaction.completed {
+    background-color: #d4edda; /* Light green for accepted transactions */
+  }
+  table.transactions tr.transaction.rejected {
+    background-color: #f8d7da; /* Light red for rejected transactions */
+  }
+</style>
+
+{% endblock %}

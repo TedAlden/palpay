@@ -22,6 +22,7 @@ from payment import views as payment_views
 
 urlpatterns = [
     path("", payment_views.home, name="home"),
+    path("dashboard/", include("dashboard.urls")),
     path("account/", include("register.urls")),
     path("payment/", include("payment.urls")),
     path("api/", include("api.urls")),

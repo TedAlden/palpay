@@ -1,0 +1,47 @@
+{% extends '../base.html' %}
+
+{% block title %}
+All Users
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>All Users</h1>
+<p>Here you can view every user account on the site with their balance.</p>
+
+{% if users %}
+<table class="table table-bordered users align-middle">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Username</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr class="user">
+      {% if user.is_superuser %}
+      <td>Admin</td>
+      {% else %}
+      <td>User</td>
+      {% endif %}
+      <td>{{ user.username }}</td>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.currency }} {{ user.balance }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No users found.</p>
+{% endif %}
+
+{% endblock %}
