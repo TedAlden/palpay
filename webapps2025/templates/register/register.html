@@ -11,7 +11,7 @@ Create an Account
 <form method="post" class="form-group">
   {% csrf_token %}
   {{ register_user|crispy }}
-  <p>Already have an account? <a href="/login">Login</a>.</p>
+  <p>Already have an account? <a href="/account/login">Login</a>.</p>
   <button type="submit" class="btn btn-success">Register</button>
 </form>
 {% endblock %}

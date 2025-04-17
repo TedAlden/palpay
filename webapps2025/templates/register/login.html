@@ -11,7 +11,7 @@ Login to an Account
 <form method="post" class="form-group">
   {% csrf_token %}
   {{ login_user|crispy }}
-  <p>Don't have an account? <a href="/register">Create an account</a>.</p>
+  <p>Don't have an account? <a href="/account/register">Create an account</a>.</p>
   <button type="submit" class="btn btn-primary">Login</button>
 </form>
 {% endblock %}
