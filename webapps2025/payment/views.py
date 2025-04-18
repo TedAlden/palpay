@@ -16,6 +16,7 @@ def home(request):
     return render(request, "payment/home.html")
 
 
+@csrf_protect
 @login_required(login_url='login')
 def send_money(request):
     if request.method == "POST":
@@ -78,6 +79,7 @@ def send_money(request):
     return render(request, "payment/send.html", {"send_form": send_form})
 
 
+@csrf_protect
 @login_required(login_url='login')
 def request_money(request):
     if request.method == "POST":
