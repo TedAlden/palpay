@@ -61,6 +61,3 @@ def all_users(request):
             "users": users,
         }
     )
-
-
-# TODO: require admin permissions to view these pages
