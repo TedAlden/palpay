@@ -191,12 +191,19 @@ def notifications(request):
 @login_required(login_url='login')
 def accept_transaction(request, transaction_id):
     if request.method == "POST":
-        # Update the transaction status to "Completed"
+        # Get the transaction record
         transaction = get_object_or_404(
             Transaction,
             id=transaction_id,
             status="Pending"
         )
+
+        # Check if the sender can afford the transaction
+        if transaction.sender.balance < transaction.amount_sent:
+            messages.error(request, "Sender has insufficient balance.")
+            return redirect('notifications')
+
+        # Update the transaction status to "Completed"
         transaction.status = "Completed"
         transaction.save()
 
