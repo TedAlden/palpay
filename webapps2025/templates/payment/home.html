@@ -5,13 +5,60 @@ Home
 {% endblock %}
 
 {% block content %}
-<h1>Welcome to PalPay</h1>
+
+<div class="p-5 mb-3 bg-body-tertiary rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">
+      Welcome to PalPay
+    </h1>
+    <p class="col-md-8 fs-4">
+      Online payment service where you can send and request payments securely.
+    </p>
+    <a class="btn btn-primary btn-lg" type="button" href="payment/send">
+      Send
+    </a>
+    <a class="btn btn-secondary btn-lg" type="button" href="payment/request">
+      Request
+    </a>
+  </div>
+</div>
 
 {% if user.is_authenticated %}
-<p>You are logged in as {{ user.username }}.</p>
-<p>Your balance is {{ user.currency }} {{ user.balance }}.</p>
-{% else %}
-<p>You are not logged in.</p>
+<div class="p-3 mb-3 bg-body-tertiary rounded-3">
+  <span>
+    Hi {{ user.username }}, your balance is {{ user.currency }} {{ user.balance }}.
+  </span>
+</div>
 {% endif %}
+
+<div class="row my-5">
+  <div class="col-md-4">
+    <h4>
+      Send or Request
+    </h4>
+    <p>
+      Send or request money from your friends and family with ease. Every
+      transaction is fast and secure.
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h4>
+      Notifications
+    </h4>
+    <p>
+      Respond to transaction requests using a simple and intuitive notifications
+      interface. View your entire transaction history in a table.
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h4>
+      Admin Tools
+    </h4>
+    <p>
+      Manage all of the platform's users and their transactions, and register
+      new administrator accounts.
+    </p>
+  </div>
+</div>
 
 {% endblock %}
