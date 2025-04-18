@@ -51,7 +51,7 @@ def currency_conversion(request, from_currency, to_currency, amount):
             )
 
         # Calculate the converted amount, rounded to 2 decimal places
-        rate = CURRENCY_CONVERSION_RATES.get((from_currency, to_currency))
+        rate = CURRENCY_CONVERSION_RATES.get((from_currency, to_currency), 1.0)
         converted_amount = round(float(amount) * rate, 2)
 
         return JsonResponse(
