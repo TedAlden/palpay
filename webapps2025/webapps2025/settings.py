@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'timestamp.apps.TimestampConfig',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,8 @@ DEFAULT_SUPERUSER_EMAIL = ""
 # API SETTINGS
 
 API_BASE_URL = "http://127.0.0.1:8000/"
+
+
+# Run server plus settings
+
+RUNSERVERPLUS_SERVER_ADDRESS_PORT = "0.0.0.0:8000"
